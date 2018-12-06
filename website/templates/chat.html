@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            $("#messages").scrollTop($("#messages")[0].scrollHeight);
+
+
+            var socket = io.connect('http://127.0.0.1:5000');
+
+            socket.on('message', function(msg) {
+                $("#messages").append(msg);
+                $("#messages").scrollTop($("#messages")[0].scrollHeight);
+            });
+
+            $('#sendbutton').on('click', function() {
+                socket.emit('message', $('#myMessage').val());
+                $('#myMessage').val('');
+            });
+
+        });
+
+    </script>
+
+
+    <h3>Website Chat</h3>
+    <br>
+    <div class="content-section scrollable" id="messages">
+        {% for message in msg_list %}
+            <p><b><a class="title mr-4" href="{{ url_for('account_user', username=message.sender.username) }}">{{ message.sender.username }}:   </a></b>{{ message.text }}</p>
+        {% endfor %}
+    </div>
+    <input type="text" class="form-control form-control-lg mb-4" type="text" id="myMessage" name="message">
+    <button class="btn btn-outline-info mb-5" id="sendbutton">Send</button>
+
+{% endblock content %}
+
+
+
+

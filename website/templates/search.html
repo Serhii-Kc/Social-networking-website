@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block content %}
+<form method="POST" action="">
+  {{ form.hidden_tag() }}
+  <fieldset class="form-group">
+      <h3 class="mb-4">Search</h3>
+        <div class="form-group">
+            {{ form.username.label(class='form-control-label') }}
+            {% if form.username.errors %}
+                {{ form.username(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.username(class="form-control form-control-lg") }}
+            {% endif %}
+            {{ form.country.label(class='form-control-label') }}
+            {% if form.country.errors %}
+                {{ form.country(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.country.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.country(class="form-control form-control-lg") }}
+            {% endif %}
+            {{ form.city.label(class='form-control-label') }}
+            {% if form.city.errors %}
+                {{ form.city(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.city.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.city(class="form-control form-control-lg") }}
+            {% endif %}
+        </div>
+       </fieldset>
+      <div class="form-group">
+          {{ form.submit(class='btn btn-outline-info mb-3') }}
+      </div>
+    </form>
+  {% for user in users %}
+      <div class="content-section">
+        <div class="media">
+          <!---<img class="rounded-circle account-img" src="{{ image_file }}"> -->
+          <div class="media-body">
+            <h2><a class="title" href="{{ url_for('account_user', username = user.username) }}">{{ user.username }}</a></h2>
+            <p class="text-secondary">{{ user.city }}, {{ user.country }}</p>
+            <p class="text">{{ user.text }}</p>
+          </div>
+        </div>
+      </div>
+  {% endfor %}
+{% endblock content %}

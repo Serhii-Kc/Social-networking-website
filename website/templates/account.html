@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+      <div class="media">
+        <img class="rounded-circle account-img" src="{{ image_file }}">
+        <div class="media-body">
+          <h2 class="account-heading">{{ user.username }}</h2>
+          <p class="text-secondary">{{ user.city }}, {{ user.country }}</p>
+          <p class="text">{{ user.text }}</p>
+        </div>
+        {% if user == current_user %}
+          <a class="btn btn-outline-info" href="{{ url_for('account_edit') }}">Edit</a>
+        {% else %}
+        {% endif %}
+      </div>
+    </div>
+{% endblock content %}
